@@ -1,19 +1,59 @@
 # Task Manager IA
 
-A simple task manager application built with Python.
+Una aplicación de línea de comandos para gestionar una lista de tareas (CRUD).
 
-## Installation
+Incluye:
+- Modelo de datos `Task` en `src/core/models.py`
+- Lógica de gestión en `src/core/task_manager.py`
+- Persistencia de datos en `src/database/storage.py`
+- CLI en `main.py`
+- Pruebas unitarias en `tests/test_task_manager.py`
 
-1. Clone the repository
-2. Create a virtual environment: `python -m venv .venv`
-3. Activate the virtual environment: `source .venv/bin/activate`
-4. Install dependencies: `pip install -r requirements.txt` (if any)
+## Estructura del repositorio
 
-## Usage
+- `main.py`: punto de entrada CLI
+- `src/`
+  - `core/`
+    - `models.py`: clase `Task`
+    - `task_manager.py`: clase `TaskManager` con `add_task`, `list_task`, `complet_task`, `delete_task`
+  - `database/`
+    - `storage.py`: manejo de `save_data`/`load_data` (JSON u otro backend)
+- `tests/`
+  - `test_task_manager.py`: pruebas unitarias para funciones principales
+- `README.md`: documentación
+- `LICENSE`: licencia
 
-Run the application: `python main.py`
+## Requisitos previos
 
-## Structure
+- Python 3.11+ (compatible con anotaciones `list[Task]`)
+- Entorno virtual recomendado:
+  - `python -m venv .venv`
+  - Linux/macOS: `source .venv/bin/activate`
+  - Windows: `.venv\Scripts\activate`
+- Dependencias: solo `unittest` integrado, no requiere instalación adicional
 
-- `src/core/`: Core logic and abstract classes
-- `src/cli/`: Command-line interface logic
+## Instalación y uso
+
+1. Clonar:
+   - `git clone <repo>`
+   - `cd taskManager_IA`
+
+2. Activar entorno:
+   - `source .venv/bin/activate` (o equivalente)
+
+3. Ejecutar:
+   - `python main.py`
+   - O desde `src` si CLI ofrece comandos: `python -m src.cli ...` (revisar implementación)
+
+4. Comandos típicos (según implementado):
+   - `add <descripción>`
+   - `list`
+   - `complete <id>` o `complet <id>`
+   - `delete <id>`
+
+## Mejora rápida sugerida (opcional)
+
+- Documentar la forma en que `save_data`/`load_data` serializa (JSON, ruta, atomicidad).
+- Añadir ejemplo de ejecución en README.
+- Agregar `make test` o `poetry run` para workflow consistente.
+- Opcional: mover tests a estructura de subcarpetas `tests/core/test_task_manager.py`.
