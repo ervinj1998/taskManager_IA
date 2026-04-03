@@ -3,6 +3,7 @@
 Una aplicación de línea de comandos para gestionar una lista de tareas (CRUD).
 
 Incluye:
+
 - Modelo de datos `Task` en `src/core/models.py`
 - Lógica de gestión en `src/core/task_manager.py`
 - Persistencia de datos en `src/database/storage.py`
