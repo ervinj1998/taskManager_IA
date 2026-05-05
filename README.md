@@ -1,125 +1,181 @@
 # Task Manager IA
 
-An intelligent command-line application for managing a task list (CRUD) with support for breaking down complex tasks using AI (Gemini or OpenAI).
+An intelligent command-line application for managing a task list (CRUD) with **optional** support for breaking down complex tasks using AI (Google Gemini or OpenAI).
 
-## Features
+> 💡 **The app works fully without an API key.** Only the AI-powered "complex task breakdown" feature (option 5) requires one.
 
-- Basic CRUD operations: add, list, complete, and delete tasks.
-- AI integration to break down complex tasks into simple subtasks.
-- Data persistence in JSON format.
-- Intuitive command-line interface.
-- Support for multiple AI providers (Gemini and OpenAI).
-- Unit tests included.
+---
 
-## Prerequisites
+## 🚀 Quickstart
 
-- Python 3.11 or higher (compatible with `list[Task]` type annotations).
-- Virtual environment recommended for dependency isolation.
-- API keys for AI services:
-  - `GEMINI_API_KEY` for Google Gemini (optional, if using Gemini).
-  - `OPENAI_API_KEY` for OpenAI (optional, if using OpenAI).
-- Internet connection for AI features.
-
-## Installation
-
-1. Clone the repository:
-   ```
-   git clone <REPOSITORY_URL>
-   cd taskManager_IA
-   ```
-
-2. Create and activate a virtual environment:
-   ```
-   python -m venv .venv
-   # On Linux/macOS:
-   source .venv/bin/activate
-   # On Windows:
-   .venv\Scripts\activate
-   ```
-
-3. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-## Configuration
-
-1. Create a `.env` file in the project root (copy the existing one and replace the keys):
-   ```
-   GEMINI_API_KEY=your_gemini_key_here
-   OPENAI_API_KEY=your_openai_key_here
-   ```
-
-2. In `main.py`, choose the AI service by commenting/uncommenting the corresponding lines:
-   - For Gemini: `from src.services.ai.gemini_service import GeminiService as AIService`
-   - For OpenAI: `from src.services.ai.openai_service import OpenAIService as AIService`
-
-## Usage
-
-Run the application:
-```
+```bash
+git clone https://github.com/ervinj1998/taskManager_IA.git
+cd taskManager_IA
+python3.11 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env                # Optional: only needed for the AI feature
 python main.py
 ```
 
-### Command Menu
+That's it — the app will start and you can use options 1–4 right away.
 
-- **1. Add task**: Enter a description to create a new task.
-- **2. List tasks**: Display all pending and completed tasks.
-- **3. Complete task**: Mark a task as completed by ID.
-- **4. Delete task**: Delete a task by ID.
-- **5. Complex task with AI**: Break down a complex task into subtasks using AI.
-- **6. Exit**: Close the application.
+---
+
+## ✨ Features
+
+- Basic CRUD operations: add, list, complete, and delete tasks.
+- Data persistence in JSON format.
+- Interactive command-line menu.
+- **Optional** AI integration to break down complex tasks into subtasks.
+- Support for two AI providers: Google Gemini and OpenAI.
+- Unit tests included.
+
+---
+
+## 📋 Prerequisites
+
+- **Python 3.11 or higher** (required for `list[Task]` type annotations).
+- Virtual environment recommended.
+- Internet connection — only if you use the AI feature.
+
+---
+
+## ⚙️ Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ervinj1998/taskManager_IA.git
+   cd taskManager_IA
+   ```
+
+2. **Create and activate a virtual environment:**
+   ```bash
+   python3.11 -m venv .venv
+   ```
+   - **Linux / macOS:** `source .venv/bin/activate`
+   - **Windows:** `.venv\Scripts\activate`
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the app:**
+   ```bash
+   python main.py
+   ```
+
+✅ At this point options 1–4 (add, list, complete, delete) work without any extra setup.
+
+---
+
+## 🔑 AI Configuration (Optional)
+
+If you want to try the **"Complex task with AI"** feature (option 5), follow these steps. Otherwise, you can skip this section.
+
+### 1. Get a free API key
+
+- **Google Gemini** (recommended — has a free tier):  
+  👉 https://aistudio.google.com/app/apikey
+
+- **OpenAI** (paid, requires billing setup):  
+  👉 https://platform.openai.com/api-keys
+
+### 2. Create your `.env` file
+
+```bash
+cp .env.example .env
+```
+
+Then open `.env` and paste your key (only fill the one you'll use):
+
+```env
+GEMINI_API_KEY=your_gemini_key_here
+OPENAI_API_KEY=your_openai_key_here
+```
+
+### 3. Choose the provider in `main.py`
+
+Comment/uncomment the import line for the provider you want:
+
+```python
+from src.services.ai.gemini_service import GeminiService as AIService
+# from src.services.ai.openai_service import OpenAIService as AIService
+```
+
+---
+
+## 🖥️ Usage
+
+Run:
+```bash
+python main.py
+```
+
+You'll see an interactive menu:
+
+| Option | Action |
+|--------|--------|
+| 1 | Add task |
+| 2 | List tasks |
+| 3 | Complete task (by ID) |
+| 4 | Delete task (by ID) |
+| 5 | Break down complex task with AI *(requires API key)* |
+| 6 | Exit |
 
 ### Examples
 
-- Add task: Select 1 and type "Buy milk".
-- Break down task: Select 5 and type "Organize a birthday party".
+- **Add a task:** select `1` and type `Buy milk`.
+- **Break down a task with AI:** select `5` and type `Organize a birthday party`.
 
-## Project Structure
+---
 
-- `main.py`: CLI entry point.
-- `src/`
-  - `core/`
-    - `models.py`: `Task` data model.
-    - `task_manager.py`: Task management logic (`TaskManager` with CRUD methods).
-  - `database/`
-    - `storage.py`: Data persistence (JSON).
-  - `services/ai/`
-    - `gemini_service.py`: Service for Google Gemini.
-    - `openai_service.py`: Service for OpenAI.
-- `tests/`
-  - `test_task_manager.py`: Unit tests.
-- `requirements.txt`: Project dependencies.
-- `tasks.json`: Persistent data file.
-- `.env`: Environment variables (do not include in version control).
+## 📁 Project Structure
 
-## Testing
+```
+taskManager_IA/
+├── main.py                  # CLI entry point
+├── src/
+│   ├── core/
+│   │   ├── models.py        # Task data model
+│   │   └── task_manager.py  # CRUD logic (TaskManager)
+│   ├── database/
+│   │   └── storage.py       # JSON persistence
+│   └── services/ai/
+│       ├── gemini_service.py
+│       └── openai_service.py
+├── tests/
+│   └── test_task_manager.py # Unit tests
+├── requirements.txt
+├── .env.example             # Template for environment variables
+├── tasks.json               # Auto-generated: persistent task storage
+└── README.md
+```
+
+---
+
+## 🧪 Testing
 
 Run the unit tests:
-```
-python -m unittest tests/test_task_manager.py
+```bash
+python -m unittest discover tests
 ```
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 1. Fork the repository.
-2. Create a branch for your feature: `git checkout -b feature/new-feature`.
+2. Create a feature branch: `git checkout -b feature/new-feature`.
 3. Make your changes and add tests.
-4. Run tests: `python -m unittest tests/test_task_manager.py`.
+4. Run the tests: `python -m unittest discover tests`.
 5. Commit: `git commit -m "Add new feature"`.
 6. Push: `git push origin feature/new-feature`.
 7. Open a Pull Request.
 
-## License
+---
 
-This project is licensed under the MIT License. See `LICENSE` for more details.
-   - `list`
-   - `complete <id>` o `complet <id>`
-   - `delete <id>`
+## 📄 License
 
-## Mejora rápida sugerida (opcional)
-
-- Documentar la forma en que `save_data`/`load_data` serializa (JSON, ruta, atomicidad).
-- Añadir ejemplo de ejecución en README.
-- Agregar `make test` o `poetry run` para workflow consistente.
-- Opcional: mover tests a estructura de subcarpetas `tests/core/test_task_manager.py`.
+This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details.
