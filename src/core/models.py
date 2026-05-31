@@ -5,6 +5,6 @@ class Task:
         self.completed = completed
 
     def __str__(self):
-        # Usamos un checkmark para completado y espacio para pendiente
+        # Checkmark for completed, space for pending
         status = "✔" if self.completed else " "
         return f"[{status}] #{self.id}: {self.description}"
