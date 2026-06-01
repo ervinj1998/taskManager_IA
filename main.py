@@ -1,66 +1,66 @@
 from src.core.task_manager import TaskManager
-from src.services.ai.gemini_service import GeminiService as AIService #usando alias para cambiar de proveedor cualquier momento
+from src.services.ai.gemini_service import GeminiService as AIService # using alias for easy provider swap
 #from src.services.ai.openai_service import OpenAIService as AIService
 
+
 def print_menu():
-    print("\n--- Gestor de Tareas Inteligente ---")
-    print("1. Añadir tarea")
-    print("2. Listar tareas")
-    print("3. Completar tarea")
-    print("4. Eliminar tarea")
-    print("5. Tarea compleja con IA")
-    print("6. Salir")
+    print("\n--- Intelligent Task Manager ---")
+    print("1. Add task")
+    print("2. List tasks")
+    print("3. Complete task")
+    print("4. Delete task")
+    print("5. Complex task with AI")
+    print("6. Exit")
+
 
 def main():
-    # Instanciamos el gestor de tareas
     manager = TaskManager()
     ai_assistant = AIService()
 
     while True:
-        
         print_menu()
 
         try:
-            choice = int(input("Elige una opción: "))
+            choice = int(input("Choose an option: "))
 
             match choice:
                 case 1:
-                    description = input("Crea nueva tarea: ")
+                    description = input("Enter a new task: ")
                     manager.add_task(description)
-                    
+
                 case 2:
                     manager.list_task()
-                    
+
                 case 3:
-                    id = int(input("ID de la tarea a completar: "))
-                    manager.complet_task(id)
-                    
+                    id = int(input("ID of the task to complete: "))
+                    manager.complete_task(id)
+
                 case 4:
-                    id = int(input("ID de la tarea a eliminar: "))
+                    id = int(input("ID of the task to delete: "))
                     manager.delete_task(id)
-                
+
                 case 5:
-                    complex_task = input("¿Qué tarea quieres que la IA desglose?: ")
-                    print("Consultando al cerebro artificial...")
-                    
-                    subtareas = ai_assistant.create_simple_tasks(complex_task)
-                    
-                    # Verificamos si no es un mensaje de error
-                    if subtareas and "Error" not in subtareas[0]:
-                        for sub in subtareas:
-                            manager.add_task(sub) # Las añadimos al manager una por una
-                        print(f"¡Se han añadido {len(subtareas)} subtareas con éxito!")
+                    complex_task = input("Which task should the AI break down?: ")
+                    print("Asking the AI...")
+
+                    ok, subtasks = ai_assistant.create_simple_tasks(complex_task)
+
+                    if ok:
+                        for sub in subtasks:
+                            manager.add_task(sub)
+                        print(f"Successfully added {len(subtasks)} subtasks!")
                     else:
-                        print(subtareas[0])
+                        print(subtasks[0])
 
                 case 6:
-                    print("Saliendo...")
+                    print("Exiting...")
                     break
                 case _:
-                    print("Opción no válida. Selecciona otra.")
-            
+                    print("Invalid option. Please choose another.")
+
         except ValueError:
-            print("Opción no válida. Selecciona otra.")
+            print("Invalid option. Please choose another.")
+
 
 if __name__ == "__main__":
     main()

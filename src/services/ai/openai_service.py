@@ -11,34 +11,34 @@ class OpenAIService:
 
     def create_simple_tasks(self, task_description):
         if not self.api_key:
-            return ["Error: La API KEY no está configurada en el .env"]
+            return (False, ["Error: API key is not configured in .env"])
 
         prompt = f"""
-        Desglosa la siguiente tarea compleja en una lista de 3 a 5 subtareas simples y accionables.
-        Tarea: {task_description}
-        
-        Responde solo con la lista de subtareas, una por línea, empezando con un guion.
-        """
+Break the following complex task into a list of 3 to 5 simple, actionable subtasks.
+Task: {task_description}
+
+Respond only with the list of subtasks, one per line, each starting with a dash.
+"""
 
         try:
             response = self.client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
-                    {"role": "system", "content": "Eres un asistente experto en gestión de tareas."},
+                    {"role": "system", "content": "You are an expert task management assistant."},
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=300
             )
 
             content = response.choices[0].message.content.strip()
-            
+
             subtasks = []
             for line in content.split("\n"):
                 line = line.strip()
                 if line and line.startswith("-"):
                     subtasks.append(line[1:].strip())
-            
-            return subtasks
+
+            return (True, subtasks)
 
         except Exception as e:
-            return [f"Error de conexión: {str(e)}"]
+            return (False, [f"Connection error: {e}"])
